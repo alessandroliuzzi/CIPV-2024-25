@@ -74,6 +74,9 @@ The script performs:
 ├── requirements.txt
 └── README.md
 
+### GPU Support (Optional)
 
+The project can run on a CUDA-enabled NVIDIA GPU for faster training/inference. Install PyTorch with CUDA following the official guide: https://pytorch.org/get-started/locally/.
+If no GPU is available, the code runs on the CPU without issues. No separate CUDA installation is needed beyond the PyTorch libraries, but make sure your Nvidia drivers are compatible and up-to-date.
 
 

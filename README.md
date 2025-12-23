@@ -46,7 +46,7 @@ macOS / Linux:
 **5. Download and locally cache the pretrained BERT model.**
 
     
-    python modelsetup.py
+    python model_setup.py
    
 
 **6. Run the main experiment.**

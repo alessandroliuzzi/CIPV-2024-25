@@ -1,1 +1,79 @@
-# CIPV-2024-25
+# Toxic Conversation Detection with BERT
+
+This repository contains a project for detecting toxic language in Italian conversations using BERT.
+The approach includes both full-conversation classification and single-message analysis with conversational context,
+with the goal of identifying the most toxic messages within each dialogue.
+
+## Reproducibility Instructions
+
+**1. Clone the repository on your local machine.**
+
+   
+    git clone https://github.com/alessandroliuzzi/CIPV-2024-25.git
+    cd CIPV-2024-25
+  
+
+**2. Create a Python virtual environment.**
+
+    
+    python -m venv venv
+    
+
+**3. Activate the virtual environment.**
+
+Windows (PowerShell):
+
+   
+    .\venv\Scripts\Activate.ps1
+    
+
+Windows (cmd):
+   
+    venv\Scripts\activate.bat
+  
+
+macOS / Linux:
+   
+    source venv/bin/activate
+   
+
+**4. Install all required dependencies.**
+
+  
+    pip install -r requirements.txt
+   
+
+**5. Download and locally cache the pretrained BERT model.**
+
+    
+    python modelsetup.py
+   
+
+**6. Run the main experiment.**
+
+   
+    python main.py
+   
+
+The script performs:
+- fine-tuning of a BERT-based classifier on full conversations,
+- evaluation using standard classification metrics,
+- single-message toxicity analysis with conversational context,
+- identification of the most toxic message in each conversation,
+- qualitative inspection through example outputs.
+
+## Project Structure
+
+```text
+.
+├── data/
+│   └── dataset.csv
+├── bert-cache/
+├── modelsetup.py
+├── main.py
+├── requirements.txt
+└── README.md
+
+
+
+

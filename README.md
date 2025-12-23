@@ -62,17 +62,6 @@ The script performs:
 - identification of the most toxic message in each conversation,
 - qualitative inspection through example outputs.
 
-## Project Structure
-
-```text
-.
-├── data/
-│   └── dataset.csv
-├── bert-cache/
-├── modelsetup.py
-├── main.py
-├── requirements.txt
-└── README.md
 
 ### GPU Support (Optional)
 

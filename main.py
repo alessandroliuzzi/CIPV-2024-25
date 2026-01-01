@@ -21,13 +21,27 @@ df["toxic"] = df["toxic"].map({"Sì": 1, "no": 0})
 df["conversation_id"] = df.index
 assert df["toxic"].isna().sum() == 0, "Error in label mapping"
 
-# 2. Train/test split
-train_df, test_df = train_test_split(df, stratify=df["toxic"], test_size=0.2, random_state=42)
+# 2. Train/val/test split
+train_df, temp_df = train_test_split(
+    df,
+    stratify=df["toxic"],
+    test_size=0.3,
+    random_state=42
+)
+
+val_df, test_df = train_test_split(
+    temp_df,
+    stratify=temp_df["toxic"],
+    test_size=0.5,
+    random_state=42
+)
+
 
 
 # 3. HuggingFace datasets
 dataset = DatasetDict({
     "train": Dataset.from_pandas(train_df.reset_index(drop=True)),
+    "validation": Dataset.from_pandas(val_df.reset_index(drop=True)),
     "test": Dataset.from_pandas(test_df.reset_index(drop=True))
 })
 
@@ -77,7 +91,7 @@ trainer = Trainer(
     model=model,
     args=training_args,
     train_dataset=tokenized_datasets["train"],
-    eval_dataset=tokenized_datasets["test"],
+    eval_dataset=tokenized_datasets["validation"],
     tokenizer=tokenizer,
     compute_metrics=compute_metrics,
 )

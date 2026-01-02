@@ -2,7 +2,7 @@
 
 This repository contains a project for detecting toxic language in Italian conversations using BERT.
 The approach includes both full-conversation classification and single-message analysis with conversational context,
-with the goal of identifying the most toxic messages within each dialogue using the same initially trained model.
+with the goal of identifying the most toxic messages within each dialogue using the same initially fine-tuned model.
 
 ## Reproducibility Instructions
 

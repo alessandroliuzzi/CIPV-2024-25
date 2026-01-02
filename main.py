@@ -1,5 +1,5 @@
 
-# FULL CHAT + SINGLE MESSAGE CLASSIFIER (WITH CONTEXT)
+# FULL CHAT + SINGLE MESSAGE TASK (WITH CONTEXT)
 
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -107,11 +107,11 @@ eval_results = trainer.evaluate(tokenized_datasets["test"])
 for k, v in eval_results.items():
     print(f"{k}: {v:.4f}")
 
-# 11. Confusion matrix and classification report
+# 11. Confusion matrix and classification report - full chat task
 predictions = trainer.predict(tokenized_datasets["test"])
 y_true = predictions.label_ids
 y_pred = np.argmax(predictions.predictions, axis=1)
-print("\nClassification Report:")
+print("\nClassification Report - Full Chat Task:")
 print(classification_report(y_true, y_pred, target_names=["non-toxic", "toxic"]))
 
 cm = confusion_matrix(y_true, y_pred)
@@ -121,12 +121,12 @@ sns.heatmap(cm, annot=True, fmt="d", cmap="Blues",
             yticklabels=["non-toxic", "toxic"])
 plt.xlabel("Predicted")
 plt.ylabel("Actual")
-plt.title("Confusion Matrix — Full Chat Classifier")
+plt.title("Confusion Matrix — Full Chat Task")
 plt.show()
 
 
 
-# 12. SINGLE MESSAGE CLASSIFIER WITH CONTEXT
+# 12. SINGLE MESSAGE TASK WITH CONTEXT
 def split_conversation(conv):
     if isinstance(conv, str):
         parts = [p.strip() for p in conv.split("  ") if len(p.strip()) > 0]
@@ -170,7 +170,7 @@ for idx, row in test_df.iterrows():
 df_results = pd.DataFrame(results)
 
 
-# 13. Compare full chat vs single message
+# 13. Compare full chat vs single message results
 pred_full_chat = y_pred
 df_pred = pd.DataFrame({
     "conversation_id": test_df["conversation_id"].values,
@@ -182,21 +182,21 @@ comparison = df_pred.merge(df_results, on="conversation_id", how="inner")
 comparison["pred_single_msg"] = (comparison["avg_tossicita"] >= 0.5).astype(int)
 comparison["result"] = np.where(comparison["pred_full_chat"] == comparison["pred_single_msg"], "✅ same", "❌ different")
 
-print("\n--- Full Chat vs Single Message Comparison ---")
+print("\n--- Full Chat vs Single Message Task Comparison ---")
 print(comparison.head(20))
 
 
-# 14. Confusion matrix — Single Message
+# 14. Confusion matrix and classification report — Single Message context-aware task
 y_true = comparison["toxic"]
 y_pred_single = comparison["pred_single_msg"]
-print("\nClassification report- Single Message Classifier:")
+print("\nClassification report- Single Message Task:")
 print(classification_report(y_true,y_pred_single,target_names=["non-toxic","toxic"]))
 cm_single = confusion_matrix(y_true, y_pred_single)
 disp = ConfusionMatrixDisplay(confusion_matrix=cm_single, display_labels=["non-toxic (0)", "toxic (1)"])
 
 plt.figure(figsize=(5,5))
 disp.plot(cmap="Purples", values_format="d")
-plt.title("Confusion Matrix — Single Message Classifier")
+plt.title("Confusion Matrix — Single Message Task")
 plt.show()
 
 
